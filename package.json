@@ -1,0 +1,20 @@
+{
+  "name": "jetlag-schweiz",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Verstecken & Suchen quer durch die Schweiz - ein digitales Hide+Seek-Spiel im Stil von Jet Lag: The Game",
+  "scripts": {
+    "install:all": "npm install --prefix server && npm install --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev": "concurrently -k -n SERVER,CLIENT -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build": "npm run build:client && node scripts/copy-dist.js && npm run build:server",
+    "start": "npm run start --prefix server",
+    "postinstall": "npm run install:all"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
