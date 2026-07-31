@@ -1,0 +1,315 @@
+:root {
+  --color-bg: #101010;
+  --color-primary: #ffffff;
+  --color-accent: #ff7a00;
+  --color-danger: #ff3b30;
+  --color-muted: #8a8a8a;
+  --color-muted-dim: #55554f;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  font-family:
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  font-family: 'Segoe UI', 'SF Mono', Consolas, monospace, sans-serif;
+}
+
+.app-shell {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 4vw;
+}
+
+/* ---------- Wall clock ---------- */
+
+.wall-clock {
+  position: fixed;
+  top: 2.2vh;
+  right: 2.4vw;
+  font-size: clamp(0.9rem, 1.4vw, 1.4rem);
+  color: var(--color-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 1.6vh, 1.4rem);
+  width: 100%;
+  max-width: 1400px;
+  text-align: center;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.block__label {
+  font-size: clamp(0.7rem, 1.6vh, 1.3rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.block__value {
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+  transition: color 180ms ease;
+}
+
+/* Timer: the dominant element on screen */
+.timer .block__value {
+  font-size: clamp(3.5rem, 16vh, 10rem);
+  letter-spacing: 0.02em;
+}
+
+.timer--paused .block__value {
+  color: var(--color-muted);
+}
+
+/* Countdown to next start */
+.countdown .block__value {
+  font-size: clamp(2rem, 8vh, 5rem);
+  color: var(--color-accent);
+}
+
+.countdown--warn .block__value {
+  animation: blink-orange 1s steps(1, end) infinite;
+}
+
+.countdown--critical .block__value {
+  animation: blink-red 1s steps(1, end) infinite;
+}
+
+@keyframes blink-orange {
+  0%, 49% { color: var(--color-accent); }
+  50%, 100% { color: var(--color-primary); }
+}
+
+@keyframes blink-red {
+  0%, 49% { color: var(--color-danger); }
+  50%, 100% { color: var(--color-primary); }
+}
+
+/* Lap counter */
+.laps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.laps .block__value {
+  font-size: clamp(2rem, 9vh, 5.5rem);
+}
+
+.laps__current {
+  font-size: clamp(0.85rem, 2.2vh, 1.4rem);
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+}
+
+.laps__current strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Distance */
+.distance .block__value {
+  font-size: clamp(1.8rem, 7vh, 4.2rem);
+}
+
+.distance .block__unit {
+  font-size: 0.4em;
+  margin-left: 0.2em;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+/* Hourly lap */
+.hourly .block__value {
+  font-size: clamp(1.4rem, 5vh, 2.8rem);
+  color: var(--color-accent);
+}
+
+/* Secondary info row: pace + milestone */
+.secondary-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.2rem, 4vw, 4rem);
+  margin-top: clamp(0.2rem, 1vh, 1rem);
+}
+
+.secondary-row .block__label {
+  font-size: clamp(0.6rem, 1.4vh, 0.9rem);
+}
+
+.secondary-row .block__value {
+  font-size: clamp(1rem, 3vh, 1.7rem);
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+/* ---------- Controls ---------- */
+
+.controls {
+  position: fixed;
+  bottom: 2.4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  opacity: 0.35;
+  transition: opacity 200ms ease;
+}
+
+.controls:hover,
+.controls:focus-within {
+  opacity: 1;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.7em 1.6em;
+  border-radius: 999px;
+  border: 1px solid var(--color-muted-dim);
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
+}
+
+.btn--accent {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn--accent:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.btn--danger {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn--danger:hover {
+  background: var(--color-danger);
+  color: var(--color-bg);
+}
+
+.shortcuts-hint {
+  position: fixed;
+  bottom: 0.6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--color-muted-dim);
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+/* ---------- Reset confirmation dialog ---------- */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  animation: fade-in 120ms ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.dialog {
+  background: #191919;
+  border: 1px solid var(--color-muted-dim);
+  border-radius: 16px;
+  padding: 2.4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.dialog__title {
+  font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+}
+
+.dialog__body {
+  color: var(--color-muted);
+  font-size: 1rem;
+  max-width: 30em;
+}
+
+.dialog__actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
