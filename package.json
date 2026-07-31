@@ -45,18 +45,21 @@
       "target": [
         "nsis",
         "portable"
-      ]
+      ],
+      "icon": "build/icon.ico"
     },
     "mac": {
       "target": [
         "dmg"
       ],
+      "icon": "build/icon.icns",
       "category": "public.app-category.sports"
     },
     "linux": {
       "target": [
         "AppImage"
       ],
+      "icon": "build/icon.png",
       "category": "Utility"
     },
     "nsis": {

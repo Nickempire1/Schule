@@ -50,7 +50,22 @@ npm run dist:linux  # Linux (AppImage)
 
 Die fertigen Pakete landen im Ordner `release/`.
 
-> Für ein eigenes App-Icon `build/icon.ico` (Windows), `build/icon.icns` (macOS) bzw. `build/icon.png` (Linux) ablegen und in der `build`-Konfiguration in `package.json` referenzieren.
+Das App-Icon liegt bereits unter `build/icon.ico` (Windows), `build/icon.icns` (macOS) und `build/icon.png` (Linux + Fenstersymbol im Dev-Modus) und ist in der `build`-Konfiguration in `package.json` referenziert. Zum Austauschen einfach die Dateien ersetzen (gleicher Dateiname) und `public/icon.png` für das Fenster-/Taskleistensymbol aktualisieren.
+
+### Windows-Build erzeugen
+
+`npm run dist:win` muss entweder **auf einem Windows-Rechner** laufen, oder auf Linux/macOS mit installiertem [Wine](https://wiki.winehq.org/Download) (electron-builder nutzt Wine, um das Icon und die Metadaten in die `.exe` einzubetten). Ohne Wine bricht der Build unter Linux mit `wine is required` ab. Alternativ lässt sich der Build z. B. über eine GitHub-Actions-Pipeline mit `windows-latest`-Runner automatisieren.
+
+Ergebnis in `release/`:
+- `Backyard Ultra Timer Setup <version>.exe` – Installer (NSIS)
+- `Backyard Ultra Timer <version>.exe` – Portable Version (kein Setup nötig)
+
+## Installation unter Windows
+
+1. **Installer-Variante (empfohlen):** Die Datei `Backyard Ultra Timer Setup <version>.exe` aus `release/` auf den Windows-Laptop kopieren und doppelklicken. Der NSIS-Installer lässt sich (dank `allowToChangeInstallationDirectory`) auf einen beliebigen Ordner installieren; danach erscheint eine Verknüpfung im Startmenü/Desktop.
+2. **Portable Variante (ohne Installation):** Alternativ einfach `Backyard Ultra Timer <version>.exe` direkt ausführen – läuft ohne Installation von einem USB-Stick oder beliebigen Ordner.
+3. **SmartScreen-Warnung:** Da die App nicht mit einem kostenpflichtigen Code-Signing-Zertifikat signiert ist, zeigt Windows beim ersten Start eventuell "Windows hat den Computer geschützt" an. Auf **"Weitere Informationen"** und dann **"Trotzdem ausführen"** klicken.
+4. **Start:** Die App startet direkt im Vollbild. Mit `F`/`ESC` lässt sich der Vollbildmodus umschalten, mit `R` (inkl. Sicherheitsabfrage) das Event zurücksetzen.
 
 ## Konfiguration
 
